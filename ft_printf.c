@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dalfredi <dalfredi@student.21-school.ru    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/13 18:05:09 by dalfredi          #+#    #+#             */
-/*   Updated: 2022/01/15 19:58:12 by dalfredi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "ft_printf.h"
 
@@ -67,24 +56,24 @@ int	converse_arg(char flag, va_list arg)
 	return (length);
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)// format - последний аргумент известного размера 
 {
-	va_list	argptr;
-	int		length;
+	va_list	argptr; //инициализация списка для получения указателя argptr
+	int		length;// количество символов, которые видели
 
 	va_start(argptr, format);
 	length = 0;
 	while (*format)
 	{
-		if (*format != '%')
-			length += ft_putchar_fd(*format, 1);
+		if (*format != '%')// если знака процента нет,значит посимвольно выводим аргументы 
+			length += ft_putchar_fd(*format, 1); // посимвольная печать значений format
 		else
 		{	
 			format++;
-			if (*format == '%')
+			if (*format == '%') // если 2% подряд то выводим процент
 				length += ft_putchar_fd(*format, 1);
 			else
-				length += converse_arg(*format, argptr);
+				length += converse_arg(*format, argptr);// если что-то другое,то переходим в функцию converse arg - то есть преобразование аргумента
 		}
 		format++;
 	}
