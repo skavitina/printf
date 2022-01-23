@@ -33,18 +33,17 @@ int	ft_putstr_fd(char *s, int fd)
 
 int	converse_arg(char flag, va_list arg)// в va_arg указываем какой тип аргументов мы хотим получить
 {
-	int	length;
-
-	length = 0;
-	if (flag == 'c')// печать 1 символа
-		length += ft_putchar_fd(va_arg(arg, int), 1);//указатель на список аргументов и тип переменной который хотим получить 
-	else if (flag == 's')//печать строки
-		length += ft_putstr_fd(va_arg(arg, char *), 1);// указатель на список аргументов и тип переменной который хотим получить 
-	else if (flag == 'p')//Аргумент указателя *void должен быть напечатан в шестнадцатиричном формате
-		length += ft_putstr_fd("0x", 1) + ft_putnbr_pointer(
-				va_arg(arg, unsigned long int));//литерал для указателя. unsigned long потому что указатель это 4 байт - вырабатывается в соответствии с 4х байтовой системой 
+	if (flag == 'c')
+		return (ft_putchar_fd(va_arg(arg, int))); 
+	else if (flag == 's')
+		return (ft_putstr_fd(va_arg(arg, char *)));
+	else if (flag == 'p')
+	{
+		ft_putstr_fd("0x");
+		return (print_pointer(va_arg(args, unsigned long long)) + 2);//литерал для указателя. unsigned long потому что указатель это 4 байт - вырабатывается в соответствии с 4х байтовой системой 
+	}
 	else if (flag == 'd')
-		length += ft_putnbr_decimal(va_arg(arg, int));
+		return (ft_putchar_fd(flag));
 	else if (flag == 'i')
 		length += ft_putnbr_decimal(va_arg(arg, int));
 	else if (flag == 'u')
